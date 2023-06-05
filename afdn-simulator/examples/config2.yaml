@@ -1,0 +1,19 @@
+start: q0
+ends:
+  - q0
+rules:
+  q0:
+    a:
+      - q1
+    b:
+      - q0
+  q1:
+    a:
+      - q2
+    b: 
+      - q1
+  q2:
+    a:
+      - q0
+    b:
+      - q2

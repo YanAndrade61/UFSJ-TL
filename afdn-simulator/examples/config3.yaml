@@ -1,0 +1,30 @@
+start: q0
+ends:
+  - qf
+rules:
+  q0:
+    a:
+      - q1
+    b:
+      - q0
+  q1:
+    a:
+      - q1
+    b: 
+      - q2
+  q2:
+    a:
+      - q0
+    b:
+      - q3
+  q3:
+    a:
+      - q1
+    b:
+      - qf
+  qf:
+    a:
+      - qf
+    b:
+      - qf
+
