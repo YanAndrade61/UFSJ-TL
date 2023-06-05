@@ -1,3 +1,13 @@
+type: AFD
+states:
+  - q0
+  - q1
+  - q2
+  - q3
+  - qf
+alphabet:
+  - a
+  - b
 start: q0
 ends:
   - qf
@@ -27,4 +37,3 @@ rules:
       - qf
     b:
       - qf
-

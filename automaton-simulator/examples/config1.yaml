@@ -1,3 +1,11 @@
+type: AFN
+states:
+  - q0
+  - q1
+  - qf
+alphabet:
+  - a
+  - b
 start: q0
 ends:
   - qf
