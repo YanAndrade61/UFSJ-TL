@@ -7,13 +7,15 @@ class Automaton:
     def process(self, string: str):
         
         states_on = set([self.start])
-        
+        states_on |= self.next_state(self.start,"vz")
+                
         for symbol in string:
 
             #Update the active states
             states = set()
             for s in states_on:
                 states |= self.next_state(s,symbol)
+                states |= self.next_state(s,"vz")
                                
             states_on = states
 
@@ -22,6 +24,8 @@ class Automaton:
     def process_step_by_step(self, string: str):
         
         states_on = set([self.start])
+        states_on |= self.next_state(self.start,"vz")
+
         all_states = []
         all_states.append(states_on)
 

@@ -57,4 +57,5 @@ Certifique-se de seguir a estrutura e os nomes das seções corretamente ao conf
 
 ## Utilização
 
-Para utilizar o simulador de autômatos finitos, siga as etapas descritas no README principal.
+Os automatos para utilização devem estar na pasta config_files.
+Para simbolizar o vazio, utilize o simbolo 'vz'.

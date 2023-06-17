@@ -141,7 +141,3 @@ class Gui:
             title = 'Result',
             message = f'String: {self.e1.get()}\n{msg}'
         )
-
-
-
-Gui()

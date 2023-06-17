@@ -14,8 +14,8 @@ rules:
     a:
       - q0
     b:
-      - q1
       - q0
+      - q1
   q1:
     b: 
       - qf
