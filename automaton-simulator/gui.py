@@ -64,6 +64,7 @@ class Gui:
     def load_config(self, kwargs):
         with open(f'{self.path}/{self.config_cb.get()}', "r") as f:
             self.config = yaml.safe_load(f)
+            #print(self.config)
 
     def process_string(self):
 
@@ -76,7 +77,10 @@ class Gui:
             return
 
         automaton = Automaton(self.config)
-        result = automaton.process(self.e1.get())
+        if(automaton.type == "PILHA"):
+            result = automaton.process_stack(self.e1.get())
+        else: 
+            result = automaton.process(self.e1.get())
         
         self.show_result(result)
     
