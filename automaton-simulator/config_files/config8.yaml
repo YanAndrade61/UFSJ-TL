@@ -1,0 +1,17 @@
+type: PILHA
+states:
+  - q0
+  - q1
+  - qf
+alphabet:
+  - a
+  - b
+start: q0
+ends:
+  - qf
+rules:
+  q0:
+    - [vz, vz, vz, [q1]]
+  q1:
+    - [b, vz, vz, [q1]]
+    - [INTE, INTE, vz, [qf]]
