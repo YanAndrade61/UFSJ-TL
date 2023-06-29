@@ -43,11 +43,12 @@ class Automaton:
         
         for stack, states in stacks_old.items():
             for state in states:
+                if stack[-1] == 'vz' and state in self.ends:
+                    return 1
                 if self.end_state(state=state, stack=stack) > 0:
                     return 1
         
         return 0
-        return len(states_on & self.ends) > 0
         
     def process_step_by_step(self, string: str):
         
@@ -68,18 +69,56 @@ class Automaton:
             all_states.append(states_on)
 
         return len(states_on & self.ends) > 0, all_states
+    
+    def process_step_by_step_stack(self, string: str):
+        stacks_old = {("vz",): [self.start]}
+        self.void_rule(state=self.start, stack=("vz",), stacks_now=stacks_old)
+
+        states_on = set([state for state in states for stack, states in stacks_old.items()])
+        all_states = []
+        all_states.append(states_on)
+                
+        for symbol in string:
+            stacks_now = {}
+            print("Letra:", symbol)
+
+            for stack, states in stacks_old.items():
+                print("\tPilha:", stack)
+                for state in states:
+                    print("\tEstado:", state)
+                    self.next_state_stack(state=state, symbol=symbol, stack=stack, stacks_now=stacks_now)
+                    
+            stacks_old = stacks_now
+            states_on = set([state for state in states for stack, states in stacks_old.items()])
+            all_states.append(states_on)
+            print(stacks_old)
+
+        print("acabou a palavra")
+        
+        for stack, states in stacks_old.items():
+            for state in states:
+                if stack[-1] == 'vz' and state in self.ends:
+                    return 1
+                if self.end_state(state=state, stack=stack) > 0:
+                    states_on = set([state for state in states for stack, states in stacks_old.items()])
+                    all_states.append(states_on)
+                    return 1
+        
+        return 0
+        
 
     def next_state(self,state: str, symbol: str):
         return set(self.rules[state].get(symbol,[]))
     
     def next_state_stack(self,state: str, symbol: str, stack: tuple, stacks_now: dict):
-        states_rules = self.rules[state]
+        states_rules = self.rules.get(state, {})
         for rule in states_rules:
             #print(rule)
             if rule[0] != symbol: continue
-            if stack[-1] != rule[1] and rule[1] != 'vz': continue
+            if stack[-1] != rule[1] and rule[1] != 'vz' and rule[1] != 'INTE': continue
+            if rule[1] == 'INTE' and stack[-1] != 'vz': continue
             
-            if rule[1] == 'vz':
+            if (rule[1] == 'vz') or (rule[1] == 'INTE'):
                 stack_nex = list(stack)
             else:
                 stack_nex = list(stack[:-1])
@@ -92,7 +131,7 @@ class Automaton:
                 self.void_rule(state=state_nex, stack=tuple(stack_nex), stacks_now=stacks_now)
 
     def end_state(self,state: str, stack: str):
-        states_rules = self.rules[state]
+        states_rules = self.rules.get(state, {})
         for rule in states_rules:
 
             if rule[0] != 'INTE' or stack[-1] != "vz": continue
@@ -105,7 +144,7 @@ class Automaton:
 
     def void_rule(self,state: str, stack: tuple, stacks_now: dict):
         # stacks_now.setdefault(tuple(stack_nex), []).append(state_nex)
-        states_rules = self.rules[state]
+        states_rules = self.rules.get(state, {})
 
         for rule in states_rules:
             if rule[0] != 'vz': continue

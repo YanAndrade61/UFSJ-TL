@@ -132,6 +132,7 @@ class Gui:
 
     def increment(self,string, all_states, result):
         self.i+=1
+        # max(len(string), len(all_states))
         if self.i < len(string):
             self.tmplabel2.config(text = f"Symbol: {string[self.i]}")
             self.tmplabel3.config(text = f"Active states: {all_states[self.i]}")
