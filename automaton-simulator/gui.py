@@ -113,7 +113,10 @@ class Gui:
 
         # procedure of symbols
         automaton = Automaton(self.config)  
-        result, all_states = automaton.process_step_by_step(string)
+        if(automaton.type == "PILHA"):
+            result, all_states = automaton.process_step_by_step_stack(string)
+        else:
+            result, all_states = automaton.process_step_by_step(string)
         
         # label symbol
         self.tmplabel2 = ttk.Label(newWindow, text=f"Symbol: {string[self.i]}")
@@ -138,6 +141,24 @@ class Gui:
             self.tmplabel3.config(text = f"Active states: {all_states[self.i]}")
         else:
             self.show_result(result)
+
+        # self.i+=1
+        # print(len(string), len(all_states))
+        # if len(string) == max(len(string), len(all_states)):
+        #     if self.i < len(string):
+        #         self.tmplabel2.config(text = f"Symbol: {string[self.i]}")
+        #         self.tmplabel3.config(text = f"Active states: {all_states[self.i]}")
+        #     else:
+        #         self.show_result(result)
+        # else:
+        #     if self.i < len(string):
+        #         self.tmplabel2.config(text = f"Symbol: {string[self.i]}")
+        #         self.tmplabel3.config(text = f"Active states: {all_states[self.i]}")
+        #     elif self.i < len(all_states):
+        #         self.tmplabel2.config(text = f"Symbol: '?'")
+        #         self.tmplabel3.config(text = f"Active states: {all_states[self.i]}")
+        #     else:
+        #         self.show_result(result)
 
     def show_result(self, result: bool):
 

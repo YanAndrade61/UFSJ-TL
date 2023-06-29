@@ -74,7 +74,7 @@ class Automaton:
         stacks_old = {("vz",): [self.start]}
         self.void_rule(state=self.start, stack=("vz",), stacks_now=stacks_old)
 
-        states_on = set([state for state in states for stack, states in stacks_old.items()])
+        states_on = set([state for stack, states in stacks_old.items() for state in states])
         all_states = []
         all_states.append(states_on)
                 
@@ -89,7 +89,7 @@ class Automaton:
                     self.next_state_stack(state=state, symbol=symbol, stack=stack, stacks_now=stacks_now)
                     
             stacks_old = stacks_now
-            states_on = set([state for state in states for stack, states in stacks_old.items()])
+            states_on = set([state for stack, states in stacks_old.items() for state in states])
             all_states.append(states_on)
             print(stacks_old)
 
@@ -98,13 +98,13 @@ class Automaton:
         for stack, states in stacks_old.items():
             for state in states:
                 if stack[-1] == 'vz' and state in self.ends:
-                    return 1
+                    return 1, all_states
                 if self.end_state(state=state, stack=stack) > 0:
-                    states_on = set([state for state in states for stack, states in stacks_old.items()])
+                    states_on = set(self.ends)
                     all_states.append(states_on)
-                    return 1
+                    return 1, all_states
         
-        return 0
+        return 0, all_states
         
 
     def next_state(self,state: str, symbol: str):
