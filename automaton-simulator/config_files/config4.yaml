@@ -11,8 +11,9 @@ ends:
   - qf
 rules:
   q0:
-    - [a, vz, A, [q1]]
+    - [a, vz, B, [q0]]
+    - [b, B, vz, [q1]]
+    - ['?', '?', vz, [qf]]
   q1:
-    - [b, A, vz, [q1]]
-    - [a, A, vz, [q0]]
-    - [INTE, INTE, vz, [qf]]
+    - [b, B, vz, [q1]]
+    - ['?', '?', vz, [qf]]

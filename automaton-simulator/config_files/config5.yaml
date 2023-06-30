@@ -1,9 +1,8 @@
-type: AFD
+type: PILHA
 states:
   - q0
   - q1
   - q2
-  - q3
   - qf
 alphabet:
   - a
@@ -13,18 +12,11 @@ ends:
   - qf
 rules:
   q0:
-    a:
-      - q1
-    b:
-      - q0
+    - [a, vz, X, [q0]]
+    - [vz, vz, vz, [q1]]
   q1:
-    vz:
-      - q2
+    - [b, vz, X, [q1]]
+    - [vz, vz, vz, [q2]]
   q2:
-    vz:
-      - q3
-  q3:
-    vz:
-      - qf
-    b:
-      - qf
+    - [a, X, vz, [q2]]
+    - ['?', '?', vz, [qf]]

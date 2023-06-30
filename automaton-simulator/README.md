@@ -18,6 +18,8 @@ O programa aceita a especificação dos autômatos usando o formato YAML (YAML A
 
 Aqui está um exemplo de como o autômato pode ser configurado usando o formato YAML:
 
+### AFDs e AFNs
+
 ```yaml
 type: AFD
 states:
@@ -53,9 +55,43 @@ Neste exemplo, o autômato é um AFD, e as seções especificadas são:
 - `ends`: Lista de estados de aceitação do autômato.
 - `rules`: Conjunto de regras de transição para cada estado e símbolo do alfabeto.
 
+### Autômatos de Pilha
+
+```yaml
+  type: PILHA
+  states:
+    - q0
+    - q1
+    - qf
+  alphabet:
+    - a
+    - b
+  start: q0
+  ends:
+    - qf
+  rules:
+    q0:
+      - [a, vz, A, [q0]]
+      - [b, vz, B, [q0]]
+      - [vz, vz, vz, [q1]]
+    q1:
+      - [a, A, vz, [q1]]
+      - [b, B, vz, [q1]]
+      - ['?', '?', vz, [qf]]
+```  
+
+Neste exemplo, o autômato é um autômato de pilha, e as seções especificadas são:
+
+- `type`: Deva ser igual a "PILHA".
+- `states`: Lista de estados do autômato.
+- `alphabet`: Lista de símbolos do alfabeto.
+- `start`: Estado inicial do autômato.
+- `ends`: Lista de estados de aceitação do autômato.
+- `rules`: Conjunto de regras de transição para cada estado e símbolo do alfabeto. Cada estado tem uma quadrupla onde o primeiro elemento representa o símbolo para o qual a regra é válida, o segundo elemento é o valor a ser desempilhado, o terceiro elemento é o valor a ser empilhado e o quarto elemento é uma lista contendo todos os estados finais.
+
 Certifique-se de seguir a estrutura e os nomes das seções corretamente ao configurar o autômato usando o formato YAML.
 
 ## Utilização
 
 Os automatos para utilização devem estar na pasta config_files.
-Para simbolizar o vazio, utilize o simbolo 'vz'.
+Para simbolizar o vazio, utilize o simbolo 'vz'. Para simbolizar a ? use '?'

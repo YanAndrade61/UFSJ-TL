@@ -28,18 +28,18 @@ class Automaton:
                 
         for symbol in string:
             stacks_now = {}
-            print("Letra:", symbol)
+            # print("Letra:", symbol)
 
             for stack, states in stacks_old.items():
-                print("\tPilha:", stack)
+                # print("\tPilha:", stack)
                 for state in states:
-                    print("\tEstado:", state)
+                    # print("\tEstado:", state)
                     self.next_state_stack(state=state, symbol=symbol, stack=stack, stacks_now=stacks_now)
                     
             stacks_old = stacks_now
-            print(stacks_old)
+            # print(stacks_old)
 
-        print("acabou a palavra")
+        # print("acabou a palavra")
         
         for stack, states in stacks_old.items():
             for state in states:
@@ -80,20 +80,20 @@ class Automaton:
                 
         for symbol in string:
             stacks_now = {}
-            print("Letra:", symbol)
+            # print("Letra:", symbol)
 
             for stack, states in stacks_old.items():
-                print("\tPilha:", stack)
+                # print("\tPilha:", stack)
                 for state in states:
-                    print("\tEstado:", state)
+                    # print("\tEstado:", state)
                     self.next_state_stack(state=state, symbol=symbol, stack=stack, stacks_now=stacks_now)
                     
             stacks_old = stacks_now
             states_on = set([state for stack, states in stacks_old.items() for state in states])
             all_states.append(states_on)
-            print(stacks_old)
+            # print(stacks_old)
 
-        print("acabou a palavra")
+        # print("acabou a palavra")
         
         for stack, states in stacks_old.items():
             for state in states:
@@ -113,12 +113,12 @@ class Automaton:
     def next_state_stack(self,state: str, symbol: str, stack: tuple, stacks_now: dict):
         states_rules = self.rules.get(state, {})
         for rule in states_rules:
-            #print(rule)
+            # print("regras: ",rule)
             if rule[0] != symbol: continue
-            if stack[-1] != rule[1] and rule[1] != 'vz' and rule[1] != 'INTE': continue
-            if rule[1] == 'INTE' and stack[-1] != 'vz': continue
+            if stack[-1] != rule[1] and rule[1] != 'vz' and rule[1] != '?': continue
+            if rule[1] == '?' and stack[-1] != 'vz': continue
             
-            if (rule[1] == 'vz') or (rule[1] == 'INTE'):
+            if (rule[1] == 'vz') or (rule[1] == '?'):
                 stack_nex = list(stack)
             else:
                 stack_nex = list(stack[:-1])
@@ -134,7 +134,7 @@ class Automaton:
         states_rules = self.rules.get(state, {})
         for rule in states_rules:
 
-            if rule[0] != 'INTE' or stack[-1] != "vz": continue
+            if rule[0] != '?' or stack[-1] != "vz": continue
             
             for state_on in rule[3]:
                 if state_on in self.ends: 
@@ -153,4 +153,4 @@ class Automaton:
                 stacks_now.setdefault(stack, []).append(state_nex)
                 self.void_rule(state=state_nex, stack=stack, stacks_now=stacks_now)
 
-        print("", end="")
+        # print("", end="")
